@@ -3,6 +3,9 @@
 
 #include <iostream>
 #include <cassert>
+#include <time.h>
+
+void triBoustro(int*, int, int);
 
 /*Fonctions test Exercice 1*/
 
@@ -85,7 +88,7 @@ void testRandEx1(int s) {
     int t[25];
     int j = 3 + rand() % 22;
     int i = rand() % (j - 2);
-    for (int i = 0; i < 24; i++)
+    for (int f = 0; f < 24; f++)
         t[i] = rand() % 255;
 
     partition(t, i, j);
@@ -124,22 +127,43 @@ int finTrie(int* tab,int j,int taille) {
     return 1;
 }
 
-/*fonctions exercice 2*/
-void triBoustro(int i , int j) {
-    int taille = j;
-    for (int i = 0; i < taille; i++) {
-        int posN = taille - i;
-        int posP = i;
-        if (posN < posN - 1) {
-            echange
-        }
-        if (posP > posP + 1)
-        {
-            echange
-        }
+// tests exercice 2
 
-    }
+void testRandEx2(int s) {
+    int a = (int)time(NULL);
+    a += s;
+    std::cout << "seed :" << a;
+    srand(a);
+    int t[25];
+    int j = 3 + rand() % 22;
+    int i = rand() % (j - 2);
+    for (int f = 0; f < 25; f++)
+        t[f] = rand() % 255;
+
+    triBoustro(t, 0, 25);
+    std::cout << "\nFIN RAND\n";
 }
+
+/*fonctions exercice 2*/
+void triBoustro(int* t, int deb, int fin) {
+	int taille = fin;
+	for (int i = 0; i < taille; i++) {
+		int posN = taille - i;
+		int posP = i;
+		for (int j = posP; j < posN; j++) {
+			if (t[j] < t[j + 1]) {
+				permuter(&t[j], &t[j + 1]);
+			}
+			if (t[posN - j] > t[posN - j - 1])
+			{
+				permuter(&t[posN - j], &t[posN - j - 1]);
+			}
+		}
+
+	}
+}
+
+
 
 
 int main()
@@ -150,7 +174,8 @@ int main()
    /* testNRandEx1(1617805099);*/
    
    // exercice 2 
-
+   for (int i = 0; i < 200; i++)
+	   testRandEx2(i);
     std::cout << "\nFIN\n";
     return EXIT_SUCCESS;
 }
