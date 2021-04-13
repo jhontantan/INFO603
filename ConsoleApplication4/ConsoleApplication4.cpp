@@ -114,14 +114,15 @@ void testNRandEx1(int seed) {
 // asserts exercice 2
 
 int debutTrie(int* tab, int j, int taille) {
-    for (int i = 0; i < taille - 1; i++) {
-        if (tab[i] > tab[i + 1]) return 0;
+    for (int i = j; i < taille - 1; i++) {
+        if (tab[i] < tab[i + 1])
+			return 0;
     }
     return 1;
 }
 
 int finTrie(int* tab,int j,int taille) {
-    for (int i = 0; i < taille-1; i++) {
+    for (int i = j; i < taille-1; i++) {
         if (tab[i] < tab[i+1]) return 0;
     }
     return 1;
@@ -147,20 +148,24 @@ void testRandEx2(int s) {
 /*fonctions exercice 2*/
 void triBoustro(int* t, int deb, int fin) {
 	int taille = fin;
-	for (int i = 0; i < taille; i++) {
+	for (int i = 1; i < taille; i++) {
 		int posN = taille - i;
 		int posP = i;
 		for (int j = posP; j < posN; j++) {
-			if (t[j] < t[j + 1]) {
+			if (t[j] > t[j + 1]) {
 				permuter(&t[j], &t[j + 1]);
+				//assert(t[j] < t[j + 1]);
 			}
 			if (t[posN - j] > t[posN - j - 1])
 			{
 				permuter(&t[posN - j], &t[posN - j - 1]);
+				//assert(t[posN - j] < t[posN - j - 1]);
 			}
+			//assert(superieurA(t[posN-j],t, posN - j,fin) && inferieurA(t[posN - j], t, i ,j));
 		}
-
+		//assert(debutTrie(t, deb, i) && finTrie(t, fin-i, fin));
 	}
+	//assert(debutTrie(t,deb,fin) && finTrie(t,deb,fin));
 }
 
 
