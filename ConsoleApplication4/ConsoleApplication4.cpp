@@ -3,9 +3,7 @@
 
 #include <iostream>
 #include <cassert>
-#include <time.h>
-
-void triBoustro(int*, int, int);
+#include "Dijkstra.h"
 
 /*Fonctions test Exercice 1*/
 
@@ -88,7 +86,7 @@ void testRandEx1(int s) {
     int t[25];
     int j = 3 + rand() % 22;
     int i = rand() % (j - 2);
-    for (int f = 0; f < 24; f++)
+    for (int i = 0; i < 24; i++)
         t[i] = rand() % 255;
 
     partition(t, i, j);
@@ -114,22 +112,41 @@ void testNRandEx1(int seed) {
 // asserts exercice 2
 
 int debutTrie(int* tab, int j, int taille) {
-    for (int i = j; i < taille - 1; i++) {
-        if (tab[i] > tab[i + 1])
-			return 0;
+    for (int i = 0; i < taille - 1; i++) {
+        if (tab[i] > tab[i + 1]) return 0;
     }
     return 1;
 }
 
 int finTrie(int* tab,int j,int taille) {
-    for (int i = j; i < taille-1; i++) {
-        if (tab[i] > tab[i+1]) 
-			return 0;
+    for (int i = 0; i < taille-1; i++) {
+        if (tab[i] < tab[i+1]) return 0;
     }
     return 1;
 }
 
 // tests exercice 2
+
+/*fonctions exercice 2*/
+void triBoustro(int* t, int deb, int fin) {
+    int taille = fin;
+    for (int i = 0; i < taille; i++) {
+        int posN = taille - i;
+        int posP = i;
+        for (int j = posP; j < posN; j++) {
+            if (t[j] < t[j + 1]) {
+                permuter(&t[j], &t[j + 1]);
+            }
+            if (t[posN - j] > t[posN - j - 1])
+            {
+                permuter(&t[posN - j], &t[posN - j - 1]);
+            }
+        }
+
+    }
+}
+
+
 
 void testRandEx2(int s) {
     int a = (int)time(NULL);
@@ -139,39 +156,12 @@ void testRandEx2(int s) {
     int t[25];
     int j = 3 + rand() % 22;
     int i = rand() % (j - 2);
-    for (int f = 0; f < 25; f++)
-        t[f] = rand() % 255;
+    for (int i = 0; i < 24; i++)
+        t[i] = rand() % 255;
 
-    triBoustro(t, 0, 25);
+    triBoustro(t, i, j);
     std::cout << "\nFIN RAND\n";
 }
-
-/*fonctions exercice 2*/
-void triBoustro(int* t, int deb, int fin) {
-	int taille = fin;
-	for (int i = 0; i < taille; i++) {
-		int posN = taille - i;
-		int posP = i;
-		for (int j = posP; j < posN; j++) {
-			if (t[j] > t[j + 1]) {
-				permuter(&t[j], &t[j + 1]);
-				assert(t[j] < t[j + 1]);
-			}
-			if (t[posN - j] > t[posN - j - 1])
-			{
-				permuter(&t[posN - j], &t[posN - j - 1]);
-				assert(t[posN - j] < t[posN - j - 1]);
-			}
-			//assert(superieurA(t[posN-j],t, posN - j,fin) && inferieurA(t[posN - j], t, i ,j));
-		}
-		assert(debutTrie(t, deb, i));
-			assert(finTrie(t, fin-i, fin));
-	}
-	assert(debutTrie(t,deb,fin) && finTrie(t,deb,fin));
-}
-
-
-
 
 int main()
 {
@@ -183,6 +173,9 @@ int main()
    // exercice 2 
    for (int i = 0; i < 200; i++)
 	   testRandEx2(i);
+
+   mainDijkstra();
+
     std::cout << "\nFIN\n";
     return EXIT_SUCCESS;
 }

@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
+﻿<?xml version="1.0" encoding="utf-8"?>
 <Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup Label="ProjectConfigurations">
     <ProjectConfiguration Include="Debug|Win32">
@@ -139,7 +139,20 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="Arc.cpp" />
     <ClCompile Include="ConsoleApplication4.cpp" />
+    <ClCompile Include="dijkstra.cpp" />
+    <ClCompile Include="Graphe.cpp" />
+    <ClCompile Include="Graphe2.cpp" />
+    <ClCompile Include="Noeud.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="Arc.h" />
+    <ClInclude Include="Graphe.h" />
+    <ClInclude Include="Dijkstra.h" />
+    <ClInclude Include="Graphe2.h" />
+    <ClInclude Include="Noeud.h" />
+    <ClInclude Include="SuperGraph.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
