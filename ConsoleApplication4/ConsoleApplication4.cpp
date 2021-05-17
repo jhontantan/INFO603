@@ -91,7 +91,7 @@ void testRandEx1(int s) {
 
     partition(t, i, j);
 
-    std::cout << "\nFIN RAND\n";
+    std::cout << "\nFIN RAND success\n";
 }
 
 void testNRandEx1(int seed) {
@@ -111,24 +111,37 @@ void testNRandEx1(int seed) {
 
 // asserts exercice 2
 
-int debutTrie(int* tab, int j, int taille) {
-    for (int i = 0; i < taille - 1; i++) {
-        if (tab[i] > tab[i + 1]) return 0;
+int tabTrie(int* tab, int deb, int fin) {
+    for (int i = deb; i < fin; i++) {
+        if (tab[i] > tab[i + 1])
+            return 0;
     }
     return 1;
 }
 
-int finTrie(int* tab,int j,int taille) {
-    for (int i = 0; i < taille-1; i++) {
-        if (tab[i] < tab[i+1]) return 0;
+int estMaximum(int max,int* tab,int deb,int fin) {
+    for (int i = deb; i <= fin; i++) {
+        if (max < tab[i]) 
+            return 0;
     }
     return 1;
 }
 
+int estMinimum(int min, int* tab, int deb, int fin) {
+    for (int i = deb; i <= fin; i++) {
+        if (min > tab[i])
+            return 0;
+    }
+    return 1;
+}
 // tests exercice 2
+
+void triBoustroCorrige(int* tab, int taille);
 
 /*fonctions exercice 2*/
 void triBoustro(int* t, int deb, int fin) {
+    triBoustroCorrige(t,fin);
+    return;
     int taille = fin;
     for (int i = 0; i < taille; i++) {
         int posN = taille - i;
@@ -146,6 +159,29 @@ void triBoustro(int* t, int deb, int fin) {
     }
 }
 
+void triBoustroCorrige(int* tab, int taille) {
+
+    int deb = 0;
+    int fin = taille-1;
+
+    for (int j = 0; j < (taille / 2); j++) {
+        for (int i = 1; i < fin-j; i++)
+            if (tab[i] < tab[i - 1]){
+                permuter(&tab[i], &tab[i - 1]);
+               assert(estMaximum(tab[i], tab, 0, i-1));//(1)
+            }
+        assert(tabTrie(tab, fin - j, fin));//(2)
+        for (int i = fin-j-1; i > j; i--)
+            if (tab[i] > tab[i + 1]) {
+                permuter(&tab[i], &tab[i + 1]);
+                assert(estMinimum(tab[i], tab, i+1, fin));//(3)
+            }
+        assert(tabTrie(tab, 0, j));//(4)
+        assert(tabTrie(tab, fin - j, fin) && tabTrie(tab, 0, j));//(5)
+    }
+    assert(tabTrie(tab, 0, fin));//(6)
+}
+
 
 
 void testRandEx2(int s) {
@@ -154,19 +190,18 @@ void testRandEx2(int s) {
     std::cout << "seed :" << a;
     srand(a);
     int t[25];
-    int j = 3 + rand() % 22;
-    int i = rand() % (j - 2);
-    for (int i = 0; i < 24; i++)
+    for (int i = 0; i < 25; i++)
         t[i] = rand() % 255;
 
-    triBoustro(t, i, j);
-    std::cout << "\nFIN RAND\n";
+    triBoustro(t, 0, 25);
+    assert(tabTrie(t,0,24));
+    std::cout << "\nFIN RAND success\n";
 }
 
 int main()
 {
     // exercice 1
-   for (int i = 0; i < 200; i++)
+  for (int i = 0; i < 200; i++)
         testRandEx1(i);
    /* testNRandEx1(1617805099);*/
    
