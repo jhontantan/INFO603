@@ -33,6 +33,9 @@
     <ClCompile Include="dijkstra.cpp">
       <Filter>Fichiers sources</Filter>
     </ClCompile>
+    <ClCompile Include="SuperGraphe.cpp">
+      <Filter>Fichiers sources</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Graphe.h">
@@ -50,7 +53,7 @@
     <ClInclude Include="Graphe2.h">
       <Filter>Fichiers d%27en-tête</Filter>
     </ClInclude>
-    <ClInclude Include="SuperGraph.h">
+    <ClInclude Include="SuperGraphe.h">
       <Filter>Fichiers d%27en-tête</Filter>
     </ClInclude>
   </ItemGroup>

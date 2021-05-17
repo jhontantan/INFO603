@@ -10,21 +10,27 @@
 	}
 
 	void Noeud::updateVoisin(int start) {
+		if (this->id > start)
+			id--;
 		for (int i = 0; i < this->voisin.size(); i++) {
-			if (i > start) // si voisin est au dessus du depart on le decremente
-				//this->voisin[i].idNoeud--;
-			if (i == start) {
+			if (this->voisin[i].idNoeud > start) // si voisin est au dessus du depart on le decremente
+				this->voisin[i].idNoeud--;
+			if (this->voisin[i].idNoeud == start) {
 				this->voisin.erase(voisin.begin() + i);
 				i--;
 			}
 		}
+
 	}
 
-	int Noeud::Distance(Noeud N) {
+	int Noeud::Distance(Noeud* N, bool test) {
+		int dist = 0;
 		for (int i = 0; i < voisin.size(); i++)
-			if (voisin[i].idNoeud == N.id)
-				return voisin[i].distance;
-		return 0;
+			if (voisin[i].idNoeud == N->id)
+				dist = voisin[i].distance;
+		if (dist == 0 && !test)
+			return N->Distance(this,true);
+		return dist;
 	}
 
 	int Noeud::LierNoeud(Noeud* N, int dist,bool pass) {

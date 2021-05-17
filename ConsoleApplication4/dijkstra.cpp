@@ -37,9 +37,9 @@ void printSolution(int dist[], int n)
 
 // Function that implements Dijkstra's single source shortest path algorithm
 // for a graph represented using adjacency matrix representation
-void dijkstra(Graphe2 graph, int src)
+void dijkstra(SuperGraphe* graph, int src)
 {
-    V2 = graph.taille();
+    V2 = graph->taille();
 
 
     int dist[V]; // The output array.  dist[i] will hold the shortest
@@ -62,9 +62,9 @@ void dijkstra(Graphe2 graph, int src)
         sptSet[u] = true;
 
         for (int v = 0; v < V2; v++)
-            if (!sptSet[v] && graph.distance(u,v) && dist[u] != INT_MAX
-                && dist[u] + graph.distance(u, v) < dist[v])
-                dist[v] = dist[u] + graph.distance(u, v);
+            if (!sptSet[v] && graph->distance(u,v) && dist[u] != INT_MAX
+                && dist[u] + graph->distance(u, v) < dist[v])
+                dist[v] = dist[u] + graph->distance(u, v);
     }
     printSolution(dist, V2);
 }
@@ -87,7 +87,7 @@ int mainDijkstra()
                         { 0, 0, 2, 0, 0, 0, 6, 7, 0 } };
     */
 
-    Graphe2 a;
+   /* Graphe2 a;
     a.CreerGraphe();
     a.AfficherGraph();
     std::cout << "  \n";
@@ -95,7 +95,53 @@ int mainDijkstra()
     a.AfficherGraph();
 
     dijkstra(a, 0);
+    */
+    Graphe b;
+    Graphe2 c;
+    b.CreerGraphe();
+    c.CreerGraphe();
 
+
+    srand(600);
+    for (int i = 0; i < 100; i++) {
+        if ((rand()%2 || b.taille() < 10) && b.taille() < 15) {
+            b.AjouterNoeud();
+            c.AjouterNoeud();
+        }
+        else {
+            int s = rand() % b.taille();
+            b.SupprimmerNoeud(s);
+            c.SupprimmerNoeud(s);
+        }
+        int N1 = 0; int N2 = 0;
+        while (N1 == N2)
+        {
+            N1 = rand() % b.taille();
+            N2 = rand() % c.taille();
+        }
+        if (rand() % 5) {
+            int dist = rand() % 35;
+            if ( dist == 32)
+                b.AfficherGraph();
+            b.LierNoeuds(N1,N2,dist);
+            if (dist == 32)
+                b.AfficherGraph();
+            if (dist == 32)
+                std::cout << "32";
+            c.LierNoeuds(N1, N2, dist);
+        }
+        else {
+            b.SupprimerRelation(N1,N2);
+            c.SupprimerRelation(N1,N2);
+        }
+
+        }
+    dijkstra(&b, 0);
+    dijkstra(&c, 0);
+
+    b.AfficherGraph();
+    std::cout << " \n";
+    c.AfficherGraph();
 
     return 0;
 }

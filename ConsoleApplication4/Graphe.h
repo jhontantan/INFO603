@@ -2,33 +2,35 @@
 #include <vector>
 #include <iostream>
 #include "Noeud.h"
+#include "SuperGraphe.h"
 
-class Graphe {
+class Graphe : public SuperGraphe{
 	std::vector<std::vector<int>> a;
-	
-	std::vector<Noeud> Noeuds;
 
 public : 
 
-		void CreerGraphe() {
-			int Array[9][9] = { { 0, 4, 0, 0, 0, 0, 0, 8, 0 },
-					{ 4, 0, 8, 0, 0, 0, 0, 11, 0 },
-					{ 0, 8, 0, 7, 0, 4, 0, 0, 2 },
-					{ 0, 0, 7, 0, 9, 14, 0, 0, 0 },
-					{ 0, 0, 0, 9, 0, 10, 0, 0, 0 },
-					{ 0, 0, 4, 14, 10, 0, 2, 0, 0 },
-					{ 0, 0, 0, 0, 0, 2, 0, 1, 6 },
-					{ 8, 11, 0, 0, 0, 0, 1, 0, 7 },
-					{ 0, 0, 2, 0, 0, 0, 6, 7, 0 } };
 
-			for (int i = 0; i < 9; i++) {
-				this->AjouterNoeud();
-			}
-			for (int i = 0; i < 9; i++)
-				for (int j = 0; j < 9; j++)
-					this->LierNoeuds(i, j, Array[i][j]);
-			SupprimmerNoeud(0);
+	void CreerGraphe() {
+
+
+		int Array[9][9] = { { 0, 14, 0, 0, 0, 0, 0, 18, 0 },
+				{ 14, 0, 18, 0, 0, 0, 0, 21, 0 },
+				{ 0, 18, 0, 17, 0, 14, 0, 0, 12 },
+				{ 0, 0, 17, 0, 19, 24, 0, 0, 0 },
+				{ 0, 0, 0, 19, 0, 20, 0, 0, 0 }, /////////////////////////////////////
+				{ 0, 0, 14, 24, 20, 0, 12, 0, 0 },
+				{ 0, 0, 0, 0, 0, 12, 0, 11, 16 },
+				{ 18, 21, 0, 0, 0, 0, 11, 0, 17 },
+				{ 0, 0, 12, 0, 0, 0, 16, 17, 0 } };
+
+		for (int i = 0; i < 9; i++) {
+			this->AjouterNoeud();
 		}
+		for (int i = 0; i < 9; i++)
+			for (int j = 0; j < 9; j++)
+				if (i > j)
+					this->LierNoeuds(i, j, Array[i][j]);
+	}
 
 	void AjouterNoeud() {
 		a.push_back(std::vector<int>(a.size()));
@@ -61,12 +63,17 @@ public :
 		{
 			AfficherNoeud(i);
 		}
+		std::cout << "\n";
 	}
 
+
 	void AfficherNoeud(int A) {
-		for (int i = 0; i < a[A].size(); i++)
+		for (int i = 0; i < a.size(); i++)
 		{
-			std::cout << a[A][i]<<",";
+			std::cout << distance(A, i);
+			if (distance(A, i) < 10)
+				std::cout << " ";
+			std::cout << ",";
 		}
 		std::cout << "\n";
 	};

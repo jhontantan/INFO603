@@ -14,7 +14,7 @@ public:
 
 	Noeud();
 
-	int Distance(Noeud N);
+	int Distance(Noeud* N,bool test = false);
 		
 	void updateVoisin(int start);
 

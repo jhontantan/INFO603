@@ -1,6 +1,7 @@
 #pragma once
 #include "Graphe.h"
-class Graphe2
+
+class Graphe2 : public SuperGraphe
 {
 	public :
 	std::vector<Noeud> a;
@@ -30,13 +31,13 @@ class Graphe2
 
 	void AjouterNoeud() {
 		Noeud z = Noeud();
+		z.id = a.size();
 		a.push_back(z);
-
-
 	}
 
 	void LierNoeuds(int A, int B, int dist) {
 		a[A].LierNoeud(&a[B],dist);
+		//a[B].LierNoeud(&a[A], dist);
 	}
 
 	void ModifDistance(int A, int B, int dist) {
@@ -79,16 +80,16 @@ class Graphe2
 	};
 
 	int distance(int A, int B) {
-		return a[A].Distance(a[B]);
+		return a[A].Distance(&a[B]);
 	}
 
 	bool estVide() {
 		return a.size() == 0;
 	}
 
-	/*std::vector<int> Voisin(int A) {
-		return a[A];
-	}*/
+	std::vector<int> Voisin(int A) {
+		return {0};
+	}
 
 };
 
